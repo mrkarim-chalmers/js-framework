@@ -1,0 +1,98 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    env:
+      TRAFIKVERKET_API_KEY: ${{ secrets.TRAFIKVERKET_API_KEY }}
+      ATLAS_USERNAME: ${{ secrets.ATLAS_USERNAME }}
+      ATLAS_PASSWORD: ${{ secrets.ATLAS_PASSWORD }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      TEST_USER1: ${{ secrets.TEST_USER1 }}
+      TEST_PW1: ${{ secrets.TEST_PW1 }}
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        
+    # First steps is for backend, make sure to change use frontend folder when adding frontend test
+    - name: Install backend dependencies
+      run: cd backend && npm install
+
+    - name: Run backend tests
+      run: cd backend && npm test
+
+    - name: Install frontend dependencies
+      run: cd frontend && npm install
+
+    - name: Start backend server
+      run: cd backend && npm run start# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    env:
+      TRAFIKVERKET_API_KEY: ${{ secrets.TRAFIKVERKET_API_KEY }}
+      ATLAS_USERNAME: ${{ secrets.ATLAS_USERNAME }}
+      ATLAS_PASSWORD: ${{ secrets.ATLAS_PASSWORD }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      TEST_USER1: ${{ secrets.TEST_USER1 }}
+      TEST_PW1: ${{ secrets.TEST_PW1 }}
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        
+    # First steps is for backend, make sure to change use frontend folder when adding frontend test
+    - name: Install backend dependencies
+      run: cd backend && npm install
+
+    - name: Run backend tests
+      run: cd backend && npm test
+
+    - name: Install frontend dependencies
+      run: cd frontend && npm install
+
+    - name: Start backend server
+      run: cd backend && npm start
+
+    - name: Start frontend server
+      run: cd frontend && npm start 
